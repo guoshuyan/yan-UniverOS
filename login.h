@@ -3,6 +3,56 @@
 string username;
 string password;
 
+// https://www.cnblogs.com/youdias/p/9643456.html
+string GetPasswordWithOutPlainAata()
+{
+	string ret;
+	char ch;
+	ch = _getch();
+	while (ch != '\n' && ch != '\r')
+	{
+		ret += ch;
+		//cout << "debug:" << ret << endl;
+		ch = _getch();
+	}
+
+	return ret;
+
+}
+
+string GetPasswordWithStar()
+{
+	string ret;
+	char ch;
+	ch = _getch();
+	while (ch != '\n' && ch != '\r')
+	{
+		_putch('*');
+		ret += ch;
+		ch = _getch();
+	}
+
+	return ret;
+
+}
+
+
+string GetPasswordAnotherChar(char rch)
+{
+	string ret;
+	char ch;
+	ch = _getch();
+	while (ch != '\n' && ch != '\r')
+	{
+		_putch(rch);
+		ret += ch;
+		ch = _getch();
+	}
+
+	return ret;
+
+}
+
 void login(int Mode) {
 	if (Mode == 0) {
 		cout << "<---------- Login ---------->" << endl;
@@ -23,7 +73,8 @@ void login(int Mode) {
 		}
 		while (1) {
 			cout << "Password : ";
-			cin >> password;
+			password = GetPasswordWithStar();
+			cout << endl;
 			if (md5(password) == shuyan.UserPassword) {
 				break;
 			}
@@ -55,7 +106,8 @@ void login(int Mode) {
 		}
 		while (1) {
 			cout << "Password : ";
-			cin >> password;
+			password = GetPasswordWithStar();
+			cout << endl;
 			if (md5(password) == shuyan.UserPassword) {
 				break;
 			}
