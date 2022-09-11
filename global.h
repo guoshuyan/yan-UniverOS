@@ -21,9 +21,9 @@ int		CheckMaxMemCount	= 3;
 
 
 // 占位函数
-void		__VOID() {};
+void __DEBUG_PAUSE() {};
 
-// 嘿嘿嘿参数
+// 控制台参数
 VOID KillConsoleCloseButton(VOID) {
     DeleteMenu(GetSystemMenu(GetConsoleWindow(), FALSE),
         SC_CLOSE, MF_DISABLED);

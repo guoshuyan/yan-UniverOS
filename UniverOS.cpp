@@ -19,11 +19,12 @@ int isNum(const char* st)
 int main(int argc, char* argv[])
 {
 	KillConsoleCloseButton();
-	SetTitle("UniverOS - By Guoshuyan");
-	NeedCheck ? check() : __VOID();
-	NeedLogin ? login(0) : __VOID();
-	cout << "Welcome!" << endl;
-	cout << "UniverOS 1.2.0 rc [Beta]" << endl << endl;
+	SetTitle(_APP_TITLE);
+	NeedCheck ? check() : __DEBUG_PAUSE();
+	NeedLogin ? login(0) : __DEBUG_PAUSE();
+	APPLICATION_START :
+	cout << _APP_START_MESSAGE << endl;
+	cout << _APP_NAME << " " << _APP_VERSION << " " << _APP_VEREXTS << " " << _APP_VEREXTSINFO << endl << endl;
 	while (1) {
 		cout << "(UniverOS) " << fileInfo.filePath << " > ";
 		cin >> inputCommand.content;
@@ -77,13 +78,20 @@ int main(int argc, char* argv[])
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 9              ┃ del>[xxx]          ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 10             ┃ cp>[xxx]>[yyy]     ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 11             ┃ rena>[xxx]>[yyy]   ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 12             ┃ date               ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 13             ┃ cls                ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 99             ┃ __install          ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 100            ┃ restart            ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 1900000000     ┃ show>[xxx]         ┃" << endl;
 				cout << "┗━━━━━━━━━━━━━━━━┻━━━━━━━━━━━━━━━━━━━━┛" << endl;
-				getch();
 				cout << endl << "看到 " << RED "ID" NONE << " 那一栏了吗？那是在代码中的 " << YELLOW "表示方式" NONE << endl;
 				cout  << "再看 " << RED "Name" NONE << " 那一栏，那是用户连接到应用的 " << YELLOW "桥梁" NONE << endl << endl;
 				while (1) {
@@ -121,6 +129,18 @@ int main(int argc, char* argv[])
 						else if (atoi(temp.c_str()) == 9) {
 							cout << DARY_GRAY "del>[xxx] " NONE << " : 删除 xxx 文件（夹）。" << endl << "示例：del>C:\\0.0 为删除 C:\\0.0 文件（夹）" << endl;
 						}
+						else if (atoi(temp.c_str()) == 10) {
+							cout << DARY_GRAY "cp>[xxx]>[yyy] " NONE << " : 复制 xxx 文件（夹）到 yyy 。" << endl << "示例：cp>C:\\0.0>C:\\Windows 为复制 C:\\0.0 文件（夹）到 C:\\Windows 文件夹" << endl;
+						}
+						else if (atoi(temp.c_str()) == 11) {
+							cout << DARY_GRAY "rena>[xxx]>[yyy] " NONE << " : 重命名 xxx 文件（夹）为 yyy 。" << endl << "示例：re>C:\\0.0>1.0 为重命名 C:\\0.0 文件（夹）为 1.0" << endl;
+						}
+						else if (atoi(temp.c_str()) == 12) {
+							cout << DARY_GRAY "date " NONE << " : 显示日期。" << endl;
+						}
+						else if (atoi(temp.c_str()) == 13) {
+							cout << DARY_GRAY "cls " NONE << " : 清空屏幕。" << endl;
+						}
 						else if (atoi(temp.c_str()) == 99) {
 							cout << DARY_GRAY "__install " NONE << " : 安装程序测试工具（试运行）。" << endl;
 						}
@@ -152,7 +172,7 @@ int main(int argc, char* argv[])
 					struct  _stat fileStat;
 					if (path.back() == "." || path.empty() == true) {
 						cout << endl << fileInfo.filePath << " ==> " << fileInfo.filePath << endl << endl;
-						__VOID();
+						__DEBUG_PAUSE();
 					} else if (path.back() == "..") {
 							try {
 								cout << endl << fileInfo.filePath << " ==> ";
@@ -175,27 +195,33 @@ int main(int argc, char* argv[])
 							cout << endl << fileInfo.filePath << " ==> " << path.back() << endl << endl;
 							fileInfo.filePath = path.back();
 						} else {
-							cout << endl << fileInfo.filePath << " ==> " << fileInfo.filePath + '\\' + path.back() << endl << endl;
-							fileInfo.filePath = fileInfo.filePath + '\\' + path.back();
+							if (isFolderExist((fileInfo.filePath + '\\' + path.back()).c_str())) {
+								cout << endl << fileInfo.filePath << " ==> " << fileInfo.filePath + '\\' + path.back() << endl << endl;
+								fileInfo.filePath = fileInfo.filePath + '\\' + path.back();
+							}
+							else {
+								cout << endl << fileInfo.filePath << " ==> " << path.back() << endl << endl;
+								fileInfo.filePath = path.back();
+							}
 						}
-						__VOID();
+						__DEBUG_PAUSE();
 					} else {
 						if ((_stat((fileInfo.filePath + path.back()).c_str(), &fileStat) == 0) && (fileStat.st_mode & _S_IFDIR))
 						{
 							cout << endl << fileInfo.filePath << " ==> " << (fileInfo.filePath + path.back()) << endl << endl;
 							fileInfo.filePath = (fileInfo.filePath + path.back()).c_str();
-							__VOID();
+							__DEBUG_PAUSE();
 						}
 						else {
 							if ((_stat((fileInfo.filePath + "\\" + path.back()).c_str(), &fileStat) == 0) && (fileStat.st_mode & _S_IFDIR))
 							{
 								cout << endl << fileInfo.filePath << " ==> " << (fileInfo.filePath + path.back()) << endl << endl;
 								fileInfo.filePath = (fileInfo.filePath + "\\" + path.back()).c_str();
-								__VOID();
+								__DEBUG_PAUSE();
 							}
 							else {
 								cout << "您输入的 " << path.back() << " 目录不存在" << endl;
-								__VOID();
+								__DEBUG_PAUSE();
 							}
 						}
 					}
@@ -209,16 +235,10 @@ int main(int argc, char* argv[])
 					fileInfo.fileName = splitstr(inputCommand.content, ">")[1];
 					fileInfo.fileContent = splitstr(inputCommand.content, ">")[2];
 					if (fileInfo.filePath.at(fileInfo.filePath.size() - 1) == '\\') {
-						ofstream fout(fileInfo.filePath + fileInfo.fileName);
-						fopen((fileInfo.filePath + fileInfo.fileName).c_str(), "w+");
-						fout << fileInfo.fileContent << endl;
-						fout.close();
+						system(("echo " + fileInfo.fileContent + " >> " + fileInfo.filePath + fileInfo.fileName).c_str());
 					}
 					else {
-						ofstream fout(fileInfo.filePath + '\\' + fileInfo.fileName);
-						fopen((fileInfo.filePath + '\\' + fileInfo.fileName).c_str(), "w+");
-						fout << fileInfo.fileContent << endl;
-						fout.close();
+						system(("echo " + fileInfo.fileContent + " >> "  + fileInfo.filePath + "\\" + fileInfo.fileName).c_str());
 					}
 				}
 				catch (exception e) {
@@ -227,15 +247,10 @@ int main(int argc, char* argv[])
 			}
 			else if (command.CommandID == 8) {
 				fileInfo.fileName = splitstr(inputCommand.content, ">")[1];
-				if (0 != access(fileInfo.fileName.c_str(), 0))
-				{
-					// if this folder not exist, create a new one.
-					if (mkdir(fileInfo.fileName.c_str()) == 0) {
-						cout << "已成功创建 " << fileInfo.fileName.c_str() << " 文件夹！" << endl;
-					}
-					else {
-						cout << "创建失败。" << endl;
-					}
+				if (fileInfo.filePath.back() == '\\') {
+					system(("md " + fileInfo.filePath + fileInfo.fileName).c_str());
+				}else{
+					system(("md " + fileInfo.filePath + '\\' + fileInfo.fileName).c_str());
 				}
 			}
 			else if (command.CommandID == 9) {
@@ -266,6 +281,65 @@ int main(int argc, char* argv[])
 						system(deleteCommand_dir.c_str());
 					}
 				}
+			}
+			else if (command.CommandID == 10) {
+				if (splitstr(inputCommand.content, ">").size() == 3) {
+					fileInfo.fileName = splitstr(inputCommand.content, ">")[1];
+					fileInfo.fileNewLocation = splitstr(inputCommand.content, ">")[2];
+					if (fileInfo.fileNewLocation.find('\\') == string::npos && fileInfo.fileName.find('\\') != string::npos) { // cp>C:\0.0>abc
+						if (fileInfo.filePath.back() == '\\') {
+							system(("copy " + fileInfo.fileName + ' ' + fileInfo.filePath + fileInfo.fileNewLocation).c_str());
+							__DEBUG_PAUSE();
+						}
+						else {
+							system(("copy " + fileInfo.fileName + ' ' + fileInfo.filePath + '\\' + fileInfo.fileNewLocation).c_str());
+							__DEBUG_PAUSE();
+						}
+					}
+					else {
+						if (fileInfo.fileName.find('\\') != string::npos && fileInfo.fileNewLocation.find('\\') != string::npos) { // cp>C:\abc>C:\0.0
+							system(("copy " + fileInfo.fileName + ' ' + fileInfo.filePath + fileInfo.fileNewLocation).c_str());
+							__DEBUG_PAUSE();
+						}
+						else {
+							if (fileInfo.filePath.back() == '\\') {
+								system(("copy " + fileInfo.filePath + fileInfo.fileName + ' ' + fileInfo.filePath + fileInfo.fileNewLocation).c_str());
+								__DEBUG_PAUSE();
+							}
+							else {
+								system(("copy " + fileInfo.filePath + '\\' + fileInfo.fileName + ' ' + fileInfo.filePath + '\\' + fileInfo.fileNewLocation).c_str());
+								__DEBUG_PAUSE();
+							}
+						}
+					}
+				}else{
+					cout << "请不要输入过多或过少 连接符 ( > ) 。" << endl;
+				}
+			}
+			else if (command.CommandID == 11) {
+				if (splitstr(inputCommand.content, ">").size() == 3) {
+					fileInfo.fileName = splitstr(inputCommand.content, ">")[1];
+					fileInfo.fileNewName = splitstr(inputCommand.content, ">")[2];
+					if (fileInfo.fileName.find('\\') == string::npos) {
+						if (fileInfo.filePath.back() == '\\') {
+							system(("ren " + fileInfo.filePath + fileInfo.fileName + ' ' + fileInfo.fileNewName).c_str());
+						} else {
+							system(("ren " + fileInfo.filePath + '\\' + fileInfo.fileName + ' ' + fileInfo.fileNewName).c_str());
+						}
+					} else {
+						system(("ren " + fileInfo.fileName + ' ' + fileInfo.fileNewName).c_str());
+					}
+				}
+				else {
+					cout << "请不要输入过多或过少 连接符 ( > ) 。" << endl;
+				}
+			}
+			else if (command.CommandID == 12) {
+				cout << "当前时间： " << GetYear() << "/" << GetMon() << "/" << GetDay() << " " << GetHour() << ":" << GetMin() << ":" << GetSec() << "  " << GetWDay() << endl;
+			}
+			else if (command.CommandID == 13) {
+				system("cls");
+				goto APPLICATION_START;
 			}
 			else if (command.CommandID == 99) {
 				char c;

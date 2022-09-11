@@ -38,6 +38,14 @@ int StringToCommandID() {
 		return 8;
 	} else if (inputCommand.content.find("del>") != string::npos || inputCommand.content.find("\ndel>") != string::npos) {
 		return 9;
+	} else if (inputCommand.content.find("cp>") != string::npos || inputCommand.content.find("\ncp>") != string::npos) {
+		return 10;
+	} else if (inputCommand.content.find("rena>") != string::npos || inputCommand.content.find("\nrena>") != string::npos) {
+		return 11;
+	} else if (inputCommand.content == "date" || inputCommand.content == "\ndate") {
+		return 12;
+	} else if (inputCommand.content == "cls" || inputCommand.content == "\ncls") {
+		return 13;
 	} else if (inputCommand.content == "__install" || inputCommand.content == "\n__install") {
 		return 99;
 	} else if (inputCommand.content == "restart" || inputCommand.content == "\nrestart") {

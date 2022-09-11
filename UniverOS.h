@@ -7,6 +7,15 @@
 #define _HAS_STD_BYTE 0
 // TODO: "xxx" 不明确削除 - E
 
+// TODO: Application Info - S
+#define _APP_NAME "UniverOS"
+#define _APP_VERSION "1.2.0"
+#define _APP_VEREXTS "Release"
+#define _APP_VEREXTSINFO "[Release]"
+#define _APP_START_MESSAGE "Welcome!"
+#define _APP_TITLE "UniverOS - By Guoshuyan"
+// TODO: Application Info - E
+
 #include <iostream>
 #include "global.h"
 
@@ -81,11 +90,16 @@ struct Command command {
 // TODO: O 相关 - E
 struct FileInfo fileInfo = {
 	"",
+	"",
+	"",
 	getcwd(NULL, 0),
 	""
 };
 
 // TODO: 其他 - S
+#include <ctime>
+#include <cstdio>
 #include "installer.h"
+#include "time.h"
 // TODO: 其他 - E
 // TODO: 在此处引用程序需要的其他标头。

@@ -41,9 +41,22 @@ bool FindAllFilesOnCurFolder(string path)
 	return true;
 }
 
+BOOL isFolderExist(const char* folder) {
+	int ret = 0;
+	ret = _access(folder, 0x0);
+	if (ret == 0) {
+		ret = TRUE;
+	} else {
+		ret = FALSE;
+	}
+	return ret;
+}
+
 struct FileInfo
 {
 	string fileName;
+	string fileNewLocation;
+	string fileNewName;
 	string filePath;
 	string fileContent;
 };
