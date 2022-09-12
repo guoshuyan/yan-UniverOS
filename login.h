@@ -1,57 +1,53 @@
 #pragma once
 
 string username;
-string password;
 
-// https://www.cnblogs.com/youdias/p/9643456.html
-string GetPasswordWithOutPlainAata()
+bool CheckPassWord(string password)/*以"*"输入密码，三次机会*/
 {
-	string ret;
+	bool judge = false;
+	int i = 0;
+	int times = 1;
+	string s;
 	char ch;
-	ch = _getch();
-	while (ch != '\n' && ch != '\r')
+	char pw[50];
+	while (times <= 3)
 	{
-		ret += ch;
-		//cout << "debug:" << ret << endl;
-		ch = _getch();
+		i = 0;
+		while ((ch = _getch()) != '\r')
+		{
+			if (ch == '\b' && i > 0)//退格
+			{
+				printf("\b \b");
+				i--;
+			}
+			else
+			{
+				pw[i++] = ch;
+				cout << '*';
+			}
+		}
+		pw[i] = '\0';
+		cout << endl;
+		if (password.compare(md5(pw)) != 0)
+		{
+			if (times == 3)
+				cout << "密码错误，退出！" << endl << endl;
+			else
+				cout << "密码错误，剩余" << (3 - times) << "次机会：";
+			times++;
+		}
+		else
+		{
+			cout << "密码正确！" << endl << endl;
+			judge = true;
+			return judge;
+		}
 	}
-
-	return ret;
-
+	if (times == 4)
+		return judge;
+	return judge;
 }
 
-string GetPasswordWithStar()
-{
-	string ret;
-	char ch;
-	ch = _getch();
-	while (ch != '\n' && ch != '\r')
-	{
-		_putch('*');
-		ret += ch;
-		ch = _getch();
-	}
-
-	return ret;
-
-}
-
-
-string GetPasswordAnotherChar(char rch)
-{
-	string ret;
-	char ch;
-	ch = _getch();
-	while (ch != '\n' && ch != '\r')
-	{
-		_putch(rch);
-		ret += ch;
-		ch = _getch();
-	}
-
-	return ret;
-
-}
 
 void login(int Mode) {
 	if (Mode == 0) {
@@ -73,13 +69,10 @@ void login(int Mode) {
 		}
 		while (1) {
 			cout << "Password : ";
-			password = GetPasswordWithStar();
-			cout << endl;
-			if (md5(password) == shuyan.UserPassword) {
+			if (CheckPassWord(shuyan.UserPassword)) {
 				break;
 			}
 			else {
-				cout << "Password error." << endl;
 				for (int i = 3; i >= 1; i--) {
 					cout << "Please try again in " << i << " seconds.\n";
 					_sleep(1000);
@@ -106,13 +99,10 @@ void login(int Mode) {
 		}
 		while (1) {
 			cout << "Password : ";
-			password = GetPasswordWithStar();
-			cout << endl;
-			if (md5(password) == shuyan.UserPassword) {
+			if (CheckPassWord(shuyan.UserPassword)) {
 				break;
 			}
 			else {
-				cout << "Password error." << endl;
 				for (int i = 3; i >= 1; i--) {
 					cout << "Please try again in " << i << " seconds.\n";
 					_sleep(1000);
