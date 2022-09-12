@@ -20,8 +20,8 @@ int main(int argc, char* argv[])
 {
 	KillConsoleCloseButton();
 	SetTitle(_APP_TITLE);
-	NeedCheck ? check() : __DEBUG_PAUSE();
-	NeedLogin ? login(0) : __DEBUG_PAUSE();
+	NeedCheck ? check() : __SKIP();
+	NeedLogin ? login(0) : __SKIP();
 	APPLICATION_START :
 	cout << _APP_START_MESSAGE << endl;
 	cout << _APP_NAME << " " << _APP_VERSION << " " << _APP_VEREXTS << " " << _APP_VEREXTSINFO << endl << endl;

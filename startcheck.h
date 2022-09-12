@@ -70,7 +70,7 @@ void check() {
 	cout << "COLORCHECK is starting..." << endl;
 	_sleep(8 * 100);
 	system("cls");
-	CheckColor ? colorcheck() : __DEBUG_PAUSE();
+	CheckColor ? colorcheck() : __SKIP();
 	_sleep(3 * 100);
 	system("cls");
 	cout << "Power On Self Test Start" << endl << endl;
@@ -79,7 +79,7 @@ void check() {
 	cout << "NUMBERCHECK is starting..." << endl;
 	_sleep(8 * 100);
 	system("cls");
-	CheckCalc ? numcheck() : __DEBUG_PAUSE();
+	CheckCalc ? numcheck() : __SKIP();
 	_sleep(3 * 100);
 	system("cls");
 	cout << "Power On Self Test Start" << endl << endl;
@@ -90,7 +90,7 @@ void check() {
 	cout << "MAXMEMCHECK is starting..." << endl;
 	_sleep(8 * 100);
 	system("cls");
-	CheckMaxMem ? maxmemcheck() : __DEBUG_PAUSE();
+	CheckMaxMem ? maxmemcheck() : __SKIP();
 	_sleep(3 * 100);
 	system("cls");
 	cout << "Power On Self Test Start" << endl << endl;

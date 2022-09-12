@@ -22,6 +22,7 @@ int		CheckMaxMemCount	= 3;
 
 // 占位函数
 void __DEBUG_PAUSE() {};
+void __SKIP() {};
 
 // 控制台参数
 VOID KillConsoleCloseButton(VOID) {
