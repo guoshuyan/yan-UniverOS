@@ -46,6 +46,8 @@ int StringToCommandID() {
 		return 12;
 	} else if (inputCommand.content == "cls" || inputCommand.content == "\ncls") {
 		return 13;
+	} else if (inputCommand.content.find("read>") != string::npos || inputCommand.content.find("\nread>") != string::npos) {
+		return 14;
 	} else if (inputCommand.content == "__install" || inputCommand.content == "\n__install") {
 		return 99;
 	} else if (inputCommand.content == "restart" || inputCommand.content == "\nrestart") {

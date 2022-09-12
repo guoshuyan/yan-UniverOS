@@ -85,6 +85,8 @@ int main(int argc, char* argv[])
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 13             ┃ cls                ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 14             ┃ read>[xxx]         ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 99             ┃ __install          ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 100            ┃ restart            ┃" << endl;
@@ -139,6 +141,9 @@ int main(int argc, char* argv[])
 						}
 						else if (atoi(temp.c_str()) == 13) {
 							cout << DARY_GRAY "cls " NONE << " : 清空屏幕。" << endl;
+						}
+						else if (atoi(temp.c_str()) == 14) {
+							cout << DARY_GRAY "read>[xxx] " NONE << " : 读取 xxx 文件。" << endl << "示例：read>C:\\0.0 为读取 C:\\0.0 文件" << endl;
 						}
 						else if (atoi(temp.c_str()) == 99) {
 							cout << DARY_GRAY "__install " NONE << " : 安装程序测试工具（试运行）。" << endl;
@@ -339,6 +344,16 @@ int main(int argc, char* argv[])
 			else if (command.CommandID == 13) {
 				system("cls");
 				goto APPLICATION_START;
+			}
+			else if (command.CommandID == 14) {
+				if (splitstr(inputCommand.content, ">").size() == 2) {
+					fileInfo.fileName = splitstr(inputCommand.content, ">")[1];
+					cout << endl << endl;
+					system(("type " + fileInfo.filePath + (fileInfo.filePath.back() == '\\' ? "" : "\\") + fileInfo.fileName).c_str());
+					cout << endl << endl;
+				} else {
+					cout << "请不要输入过多或过少 连接符 ( > ) 。" << endl;
+				}
 			}
 			else if (command.CommandID == 99) {
 				char c;
