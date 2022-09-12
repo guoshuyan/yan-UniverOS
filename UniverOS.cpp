@@ -27,9 +27,8 @@ int main(int argc, char* argv[])
 	cout << _APP_NAME << " " << _APP_VERSION << " " << _APP_VEREXTS << " " << _APP_VEREXTSINFO << endl << endl;
 	while (1) {
 		cout << "(UniverOS) " << fileInfo.filePath << " > ";
-		cin >> inputCommand.content;
+		getline(cin, inputCommand.content);
 		if (enableCommand) {
-			inputCommand.content = trimAllSpace(inputCommand.content);
 			command.CommandID = StringToCommandID();
 			string msg = IDtoMSG(command.CommandID);
 			if (command.CommandID < 0) {

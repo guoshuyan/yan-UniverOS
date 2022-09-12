@@ -9,7 +9,7 @@
 
 // TODO: Application Info - S
 #define _APP_NAME "UniverOS"
-#define _APP_VERSION "1.2.2"
+#define _APP_VERSION "1.2.3"
 #define _APP_VEREXTS "Release"
 #define _APP_VEREXTSINFO "[Release]"
 #define _APP_START_MESSAGE "Welcome!"

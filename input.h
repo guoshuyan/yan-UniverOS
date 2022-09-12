@@ -5,17 +5,6 @@ using namespace std;
 
 typedef vector<std::string> StringList;
 
-string trimAllSpace(string str)
-{
-    string::iterator pos = str.begin();
-    while (1)
-    {
-        pos = find(pos, str.end(), ' ');
-        if (pos == str.end()) break;
-        str.erase(pos);
-    }
-    return str;
-}
 
 StringList splitstr(const std::string& str, const std::string& pattern)
 {

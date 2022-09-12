@@ -19,7 +19,7 @@
 
 int StringToCommandID() {
 	if (inputCommand.content.empty()) {
-		return -3001;
+		return -3000;
 	} else if (inputCommand.content == "ls" || inputCommand.content == "\nls" || inputCommand.content == "dir" || inputCommand.content == "\ndir") {
 		return 1;
 	} else if (inputCommand.content.find("endl>") != string::npos || inputCommand.content.find("\nendl>") != string::npos) {

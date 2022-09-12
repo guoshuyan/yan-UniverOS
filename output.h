@@ -9,8 +9,8 @@ string IDtoMSG(int id) {
 		return "函数内部错误";
 	case -3:
 		return "用户输入错误";
-	case -3001:
-		return "用户输入错误（输入为空）";
+	case -3000:
+		return "";
 	case -10:
 		return "函数暂未定义";
 	default:
