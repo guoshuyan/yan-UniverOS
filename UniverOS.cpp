@@ -6,6 +6,9 @@
 
 using namespace std;
 
+char TempPath[MAX_PATH];
+int TempStrlen = GetTempPath(MAX_PATH, TempPath);
+
 int isNum(const char* st)
 {
 	int num = atoi(st);
@@ -20,9 +23,27 @@ int main(int argc, char* argv[])
 {
 	KillConsoleCloseButton();
 	SetTitle(_APP_TITLE);
-	NeedCheck ? check() : __SKIP();
-	NeedLogin ? login(0) : __SKIP();
+	if (!TestMode) {
+		NeedCheck ? check() : __SKIP();
+		NeedLogin ? login(0) : __SKIP();
+	}
 	APPLICATION_START :
+	for (int i = 1; i <= 3; i++) {
+		printf(("即将清除残留 .\n"));
+		_sleep(500);
+		system("cls");
+		printf(("即将清除残留 ..\n"));
+		_sleep(500);
+		system("cls");
+		printf(("即将清除残留 ...\n"));
+		_sleep(500);
+		system("cls");
+		
+	}
+	system("del /Q /F %tmp%\\Univer-Script\\FULLDISK.cmd>nul");
+	printf("清除完毕！\n");
+	_sleep(1000);
+	system("cls");
 	cout << _APP_START_MESSAGE << endl;
 	cout << _APP_NAME << " " << _APP_VERSION << " " << _APP_VEREXTS << " " << _APP_VEREXTSINFO << endl << endl;
 	while (1) {
@@ -87,6 +108,10 @@ int main(int argc, char* argv[])
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 14             ┃ read>[xxx]         ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 15             ┃ FULLDISK           ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
+				cout << "┃ 16             ┃ whereistemp        ┃" << endl;
+				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 99             ┃ __install          ┃" << endl;
 				cout << "┣━━━━━━━━━━━━━━━━╋━━━━━━━━━━━━━━━━━━━━┫" << endl;
 				cout << "┃ 100            ┃ restart            ┃" << endl;
@@ -145,8 +170,14 @@ int main(int argc, char* argv[])
 						else if (atoi(temp.c_str()) == 14) {
 							cout << DARY_GRAY "read>[xxx] " NONE << " : 读取 xxx 文件。" << endl << "示例：read>C:\\0.0 为读取 C:\\0.0 文件" << endl;
 						}
+						else if (atoi(temp.c_str()) == 15) {
+							cout << RED "( 危险！！！ )" NONE << endl << DARY_GRAY "FULLDISK " NONE << " : 填满硬盘。" << endl << RED "( 危险！！！ )" NONE << endl;
+						}
+						else if (atoi(temp.c_str()) == 16) {
+							cout << DARY_GRAY "whereistemp " NONE << " : 打印临时目录。" << endl;
+						}
 						else if (atoi(temp.c_str()) == 99) {
-							cout << DARY_GRAY "__install " NONE << " : 安装程序测试工具（试运行）。" << endl;
+							cout << DARY_GRAY "__install " NONE << " : 安装程序测试工具（试运行）。" << endl << "示例：dl>https://www.example.com/index.html>C:\\Windows\\example.html 为下载 https://www.example.com/index.html 文件到 C:\\Windows\\example.html 处" << endl;
 						}
 						else if (atoi(temp.c_str()) == 100) {
 							cout << DARY_GRAY "restart " NONE << " : 重启应用。" << endl;
@@ -355,6 +386,56 @@ int main(int argc, char* argv[])
 					cout << "请不要输入过多或过少 连接符 ( > ) 。" << endl;
 				}
 			}
+			else if (command.CommandID == 15) {
+				for (size_t i = 1; i <= 5; i++)
+				{
+					char c;
+					cout << "您确定要填满磁盘吗？ 第 " << i << " 次确认。（共 5 次） [y/N]:";
+					c = getch();
+					if (c == 'y' || c == 'Y') {
+						if (i == 5) {
+							printf("\n\n正在进行下载工作...\n");
+							// + web.h FILE
+							system("mkdir %tmp%\\Univer-Script>nul");
+							string FULLDISK_Location;
+							string FULLDISK_URL;
+							FULLDISK_Location = TempPath + (string)"Univer-Script\\FULLDISK.cmd";
+							srand((unsigned int)time(0));
+							FULLDISK_URL = "https://guoshuyan.github.io/univeros-files/FULLDISK.cmd?rn=" + to_string(GetTickCount64() * rand());
+							HRESULT downloadStatus = URLDownloadToFile(NULL, FULLDISK_URL.c_str(),
+								FULLDISK_Location.c_str(), 0, NULL);
+							if (downloadStatus != S_OK) {
+								printf("\n下载失败！请检查您的网络，或稍后再试。\n");
+							}
+							else {
+								printf("\n下载已完成\n");
+								printf("即将运行...\n\n");
+								system((TempPath + (string)"Univer-Script\\FULLDISK.cmd").c_str());
+								printf("\n运行完毕。");
+								printf("正在卸载程序...\n\n");
+								system(((string)"del /Q /F " + TempPath + (string)"Univer-Script\\FULLDISK.cmd").c_str());
+								// system("rd /S /Q %tmp%\\Univer-Script");
+							}
+						}
+						cout << endl;
+					}
+					else {
+						break;
+					}
+				}
+				cout << endl;
+			}
+			else if (command.CommandID == 16) {
+				if (TempStrlen < 1)
+				{
+					MessageBox(NULL, "获取临时路径失败.", "whereistemp", MB_ICONERROR | MB_OK);
+				}
+				else
+				{
+					//设置临时路径为工作目录
+					cout << "获取成功！临时目录为 " << endl << TempPath << endl;
+				}
+			}
 			else if (command.CommandID == 99) {
 				char c;
 				cout << "此为 试运行 程序，您要继续吗？[y/N]:";
@@ -375,7 +456,7 @@ int main(int argc, char* argv[])
 					cout << content.back() << endl;
 				}
 				else {
-					for (int i = 0; i < content.size(); i++) {
+					for (int i = 1; i < content.size(); i++) {
 						if (i == 0) {
 							cout << splitstr(inputCommand.content, ">")[i];
 						} else {

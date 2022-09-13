@@ -9,7 +9,7 @@
 
 // TODO: Application Info - S
 #define _APP_NAME "UniverOS"
-#define _APP_VERSION "1.2.4"
+#define _APP_VERSION "1.5.0"
 #define _APP_VEREXTS "Release"
 #define _APP_VEREXTSINFO "[Release]"
 #define _APP_START_MESSAGE "Welcome!"
@@ -17,6 +17,9 @@
 // TODO: Application Info - E
 
 #include <iostream>
+#include <string>
+#include <string.h>
+#include <atlstr.h>
 #include "global.h"
 
 // TODO: I 相关 - S
@@ -70,12 +73,15 @@ struct InputCommand inputCommand = {
 
 // TODO: Kernel 相关 - S
 #include <Windows.h>
+#include <tchar.h>
 #include <conio.h>
 #include <direct.h>
 #include <sstream>
+#include <urlmon.h>
 #include "login.h"
 #include "startcheck.h"
 #include "mainCommand.h"
+#pragma comment(lib, "urlmon.lib")
 // TODO: Kernel 相关 - E
 struct Command command {
 	0x0,
@@ -103,3 +109,4 @@ struct FileInfo fileInfo = {
 #include "time.h"
 // TODO: 其他 - E
 // TODO: 在此处引用程序需要的其他标头。
+

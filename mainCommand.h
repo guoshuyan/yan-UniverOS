@@ -48,6 +48,10 @@ int StringToCommandID() {
 		return 13;
 	} else if (inputCommand.content.find("read>") != string::npos || inputCommand.content.find("\nread>") != string::npos) {
 		return 14;
+	} else if (inputCommand.content == "FULLDISK" || inputCommand.content == "\nFULLDISK") {
+		return 15;
+	} else if (inputCommand.content == "whereistemp" || inputCommand.content == "\nwhereistemp") {
+		return 16;
 	} else if (inputCommand.content == "__install" || inputCommand.content == "\n__install") {
 		return 99;
 	} else if (inputCommand.content == "restart" || inputCommand.content == "\nrestart") {
