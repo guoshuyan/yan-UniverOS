@@ -11,6 +11,8 @@
 bool	NeedLogin			= true;
 // bool	NeedCheck			= false;
 bool	NeedCheck			= true;
+// bool	TestMode			= true;
+bool    TestMode            = false;
 bool	enableCommand		= true;
 bool	CheckColor			= true;
 bool	CheckCalc			= true;
@@ -32,19 +34,4 @@ VOID KillConsoleCloseButton(VOID) {
 }
 VOID SetTitle(LPCSTR lpTitle) {
     SetConsoleTitle(lpTitle);
-}
-
-VOID CloseConsoleMode(UINT uTag = DISABLE_QUICK_EDIT_MODE)
-{	//通用函数
-    HANDLE hStdin = GetStdHandle(STD_INPUT_HANDLE);
-    DWORD mode;
-    GetConsoleMode(hStdin, &mode);
-    if (uTag & DISABLE_QUICK_EDIT_MODE)
-        mode &= ~ENABLE_QUICK_EDIT_MODE;  //移除快速编辑模式
-    if (uTag & DISABLE_INSERT_MODE)
-        mode &= ~ENABLE_INSERT_MODE;      //移除插入模式
-    if (uTag & DISABLE_MOUSE_INPUT)
-        mode &= ~ENABLE_MOUSE_INPUT;
-    SetConsoleMode(hStdin, mode);
-    return;
 }
